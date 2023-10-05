@@ -2,7 +2,7 @@ import pandas as pd
 import requests
 from flask import Flask, render_template
 
-app = Flask(__name__, template_folder='templates', static_folder='static')
+application = Flask(__name__, template_folder='templates', static_folder='static')
 
 # Set display options
 pd.set_option('display.max_columns', None)
@@ -115,9 +115,9 @@ player_data['aTS%'] = round(((β_0 + correlation_coefficient * player_data['Usag
 player_data = player_data.sort_values(by='PPG', ascending=False)
 
 # Pass the DataFrame to the HTML template and render it
-@app.route('/')
+@application.route('/')
 def index():
     return render_template('index.html', df=player_data)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    application.run(host="0.0.0.0", port=5000)
