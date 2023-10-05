@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adjusted True Shooting %</title>
+
+    <!-- Link to CSS file and fonts-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='atsstyle.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="navbar">
+            <ul>
+                <li><a href="#" class="active" onclick="showPage('dataPage')">aTS% DATA</a></li>
+                <li><a href="#" onclick="showPage('aboutATSPage')">ABOUT aTS%</a></li>
+                <li><a href="#" onclick="showPage('aboutDevelopmentPage')">ABOUT DEVELOPMENT</a></li>
+                <li><a href="#" onclick="showPage('aboutMePage')">ABOUT ME</a></li>
+            </ul>
+        </div>
+
+        <div class="buttons">
+            <a href="https://www.linkedin.com/in/pravirgoosari/" target="_blank" class="linkedin-button"><span></span>LINKEDIN</a>
+            <a href="https://github.com/pravirgoosari" target="_blank" class="github-button"><span></span>GITHUB</a>
+        </div>
+
+        <!-- Content for the "Data" page -->
+        <div id="dataPage" class="page-content">
+            <div class="page-title">
+                <h1>ADJUSTED TRUE SHOOTING %</h1>
+            </div>
+            <div class="table-container">
+                <!-- Display the DataFrame as an HTML table -->
+                <div class="table-scroll">
+                    <table id="playerDataTable" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable(0)">Player</th>
+                            <th onclick="sortTable(1)">Season</th>
+                            <th onclick="sortTable(2)">PPG</th>
+                            <th onclick="sortTable(3)">aTS%</th>
+                            <th onclick="sortTable(4)">TS%</th>
+                            <th onclick="sortTable(5)">Usage Rate</th>
+                        </tr>
+                    </thead>
+                        <tbody>
+                            {% for index, row in df.iterrows() %}
+                            <tr>
+                                <td>{{ row['Player'] }}</td>
+                                <td>{{ row['Season'] }}</td>
+                                <td>{{ row['PPG'] }}</td>
+                                <td>{{ row['aTS%'] }}</td>
+                                <td>{{ row['TS%'] }}</td>
+                                <td>{{ row['Usage Rate'] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content for other pages -->
+        <div id="aboutATSPage" class="page-content" style="display: none;">
+            <h1>ABOUT aTS%</h1>
+            <p>Adjusted True Shooting % (aTS%) is an adapted and modified version
+                   of the commonly used metric, True Shooting % (TS%). TS% by itself
+                   is a good source of measuring efficiency, but it fails to account
+                   for one thing that can sway a player’s efficiency based on their
+                   situation: usage rate. In theory, the more shots a player takes,
+                   and handles the ball, the less efficient they would become as there
+                   is less variance due to hot shooting and there is also more fatigue
+                   due to higher shot volume. aTS% rewards players who maintain elite
+                   efficiency despite playing in high load situations, and does the
+                   opposite for players in low volume situations. It incorporates usage
+                   rate in its formula, creating a better and more advanced way of looking
+                   at player efficiency. The formula for aTS% was derived through linear
+                   regression amongst the two variables, TS% and Usage Rate. After finding
+                   the correlation, a formula could be derived that incorporates that found
+                   correlation with the TS% and usage rate of the player, as well as the
+                   league average TS% and intercept. In the future, aTS% looks to incorporate
+                   other factors such as spacing and teammate playmaking that can also have an
+                   effect on efficiency. All in all, aTS% aims to be the future of efficiency
+                   measuring statistics in the NBA.</p>
+        </div>
+
+        <div id="aboutDevelopmentPage" class="page-content" style="display: none;">
+            <h1>ABOUT DEVELOPMENT</h1>
+            <p>The development of aTS%, or Adjusted True Shooting Percentage, represents
+                   a fascinating intersection of data science, web development, and basketball
+                   analytics. This innovative statistic was brought to life through a multi-step
+                   process that began with the extraction of data by scraping the NBA API using
+                   Python. This versatile programming language proved instrumental in collecting
+                   the necessary raw data for aTS%. Once obtained, this data underwent meticulous
+                   transformation and analysis using the Pandas library. Linear regression, a
+                   statistical technique, was employed to create the aTS% formula. This formula
+                   dynamically incorporated various variables crucial to accurately assessing a
+                   player's shooting performance. These variables, such as TS%, Usage Rate, league
+                   average TS%, correlation coefficient, and intercept were seamlessly integrated
+                   into a comprehensive DataFrame, a structured data representation, to facilitate
+                   further analysis. The magic of aTS% truly came to life on the frontend of the
+                   project, where HTML played a pivotal role. The DataFrame generated from the
+                   Python calculations was elegantly displayed on the web interface using HTML
+                   tables. This user-friendly presentation allowed basketball enthusiasts and
+                   analysts alike to explore and dissect the aTS% data visually. The next step in
+                   development is implementing data from other seasons, rather than just the
+                   2022-23 league year. In essence, the development of aTS% showcases the power
+                   of technology and data-driven insights in modern sports analysis.
+            </p>
+        </div>
+
+        <div id="aboutMePage" class="page-content" style="display: none;">
+            <h1>ABOUT ME</h1>
+            <p>I am a dedicated student enrolled at the University of Washington, pursuing a
+               degree in Electrical and Computer Engineering as a proud member of the Class
+               of 2026. While my academic pursuits are centered around engineering, my true
+               passion lies in the world of basketball. This dynamic intersection of technology
+               and sports has fueled my enthusiasm for both analytics and computer science. My
+               journey into the realm of basketball has been a multifaceted one. I've delved
+               deep into the intricacies of the game, honing my expertise in not only the
+               conventional facets but also the increasingly influential world of analytics.
+               As a testament to this passion, I take immense pride in being the originator of
+               the innovative statistic known as "aTS%," which redefines how we measure player
+               efficiency by incorporating usage rate. Beyond my academic and statistical
+               endeavors, I channel my basketball fervor into "HoopsLine," my very own Instagram
+               page. Here, I combine my insights and creativity through graphic design to share
+               my unique perspectives and opinions on the world of basketball. Through this
+               platform, I aim to engage, educate, and inspire fellow basketball enthusiasts,
+               fostering a community bound by our shared love for the game and its evolving
+               landscape.</p>
+        </div>
+    </div>
+
+    <!-- Function to sort the table -->
+    <script>
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("playerDataTable");
+            switching = true;
+            dir = "asc";
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+                    if (n === 2 || n === 3 || n === 4 || n === 5) {
+                        x = parseFloat(x.innerHTML);
+                        y = parseFloat(y.innerHTML);
+                    }
+                    if (dir === "asc") {
+                        if (x > y) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir === "desc") {
+                        if (x < y) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchcount++;
+                } else {
+                    if (switchcount === 0 && dir === "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+
+        // Function to show the selected page and hide others
+        function showPage(pageId) {
+            var pages = ["dataPage", "aboutATSPage", "aboutDevelopmentPage", "aboutMePage"];
+            for (var i = 0; i < pages.length; i++) {
+                var page = document.getElementById(pages[i]);
+                if (pages[i] === pageId) {
+                    page.style.display = "block";
+                } else {
+                    page.style.display = "none";
+                }
+            }
+        }
+
+        // Show the default page (Data) when the page loads
+        window.onload = function () {
+            showPage("dataPage");
+        };
+    </script>
+</body>
+</html>
