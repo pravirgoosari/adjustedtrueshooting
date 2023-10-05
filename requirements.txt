@@ -19,7 +19,7 @@ mysql-connector-python==8.1.0
 nba-api==1.2.1
 numpy==1.24.4
 packaging==23.1
-pandas==2.1.0
+pandas==2.0.3
 Pillow==10.0.0
 protobuf==4.21.12
 PyMySQL==1.1.0
