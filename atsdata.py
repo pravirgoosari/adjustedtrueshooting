@@ -101,7 +101,7 @@ for api_url in api_urls:
 # Calculate the correlation coefficient
 correlation_coefficient = pd.Series(ts_list).corr(pd.Series(usage_rate_list))
 
-# Calculate meanTS and meanUSG
+# Calculate meanTS and meanUS
 mean_ts = pd.Series(ts_list).mean()
 mean_usg = pd.Series(usage_rate_list).mean()
 
