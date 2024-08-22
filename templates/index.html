@@ -30,6 +30,12 @@
             <div class="page-title">
                 <h1>ADJUSTED TRUE SHOOTING %</h1>
             </div>
+            <div class="season-toggle-container">
+                <div class="season-toggle">
+                    <button onclick="toggleSeason('2024')" class="active" id="btn2024">2024 Season</button>
+                    <button onclick="toggleSeason('2023')" id="btn2023">2023 Season</button>
+                </div>
+            </div>
             <div class="table-container">
                 <!-- Display the DataFrame as an HTML table -->
                 <div class="table-scroll">
@@ -44,9 +50,9 @@
                             <th onclick="sortTable(5)">Usage Rate</th>
                         </tr>
                     </thead>
-                        <tbody>
+                        <tbody id="tableBody">
                             {% for index, row in df.iterrows() %}
-                            <tr>
+                            <tr class="season-{{ row['Season'] }}">
                                 <td>{{ row['Player'] }}</td>
                                 <td>{{ row['Season'] }}</td>
                                 <td>{{ row['PPG'] }}</td>
@@ -188,9 +194,30 @@
             }
         }
 
-        // Show the default page (Data) when the page loads
+        // Function to toggle between 2023 and 2024 data
+        function toggleSeason(season) {
+            var table = document.getElementById("playerDataTable");
+            var rows = table.getElementsByTagName("tr");
+            var btn2023 = document.getElementById("btn2023");
+            var btn2024 = document.getElementById("btn2024");
+
+            // If no season is provided, default to 2024
+            season = season || "2024";
+
+            // Toggle visibility of rows
+            Array.from(rows).forEach(function(row) {
+                row.classList.toggle("hidden", !row.classList.contains("season-" + season));
+            });
+
+            // Update button states
+            btn2023.classList.toggle("active", season === "2023");
+            btn2024.classList.toggle("active", season === "2024");
+        }
+
+        // Show the default page (Data) and 2024 data when the page loads
         window.onload = function () {
             showPage("dataPage");
+            toggleSeason("2024"); // This will show 2024 data by default
         };
     </script>
 </body>
